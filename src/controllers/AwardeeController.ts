@@ -19,7 +19,7 @@ export class AwardeeController {
   @Get('organisation/:id')
   @AutoRespond()
   @Middleware(handleValidation)
-  async login(req: Request): Promise<Awardee[]> {
+  async organisationAwardees(req: Request): Promise<Awardee[]> {
     const id = (req.params.id as unknown) as number;
     const data = await awardeeService.getOrgnisationAwardees(id);
     return data;

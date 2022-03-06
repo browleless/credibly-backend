@@ -24,7 +24,7 @@ export class UserController {
   @Patch('update')
   @AutoRespond()
   @Middleware(handleValidation)
-  async update(req: Request): Promise<void> {
+  async updateUser(req: Request): Promise<void> {
     const input: UpdateUserReq = req.body;
     await userService.updateUser(input);
   }
