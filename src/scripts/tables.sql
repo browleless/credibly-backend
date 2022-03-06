@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS `AwardeeGroupAwardeeIds` (
   PRIMARY KEY (`awardeeGroupId`, `awardeeId`)
 ) ENGINE=InnoDB;
 
--- TODO find out how to store image blob / file path of uploaded image
 CREATE TABLE IF NOT EXISTS `CredentialTemplate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `organisationId` int(11) NOT NULL,
+  `image` LONGBLOB NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;

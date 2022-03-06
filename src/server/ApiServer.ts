@@ -3,6 +3,7 @@ import { env } from '../env';
 import { controllers } from '../controllers';
 import express from 'express';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 
 export class ApiServer extends Server {
 
@@ -11,6 +12,7 @@ export class ApiServer extends Server {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(fileUpload());
     this.addControllers(controllers);
   }
 
