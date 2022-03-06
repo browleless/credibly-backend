@@ -166,7 +166,8 @@ export class AwardeeGroupService {
       const awardeeGroupPromises: Promise<number>[] = [];
 
       groupIds.forEach((id: number) => {
-        awardeeGroupAwardeeIdPromises.push(awardeeGroupAwardeeIdsRepo.bulkDestroyByAwardeeGroupId(id, transaction));awardeeGroupPromises.push(awardeeGroupRepo.bulkDestroyById(id, transaction));
+        awardeeGroupAwardeeIdPromises.push(awardeeGroupAwardeeIdsRepo.bulkDestroyByAwardeeGroupId(id, transaction));
+        awardeeGroupPromises.push(awardeeGroupRepo.bulkDestroyById(id, transaction));
       });
 
       await Promise.all(awardeeGroupAwardeeIdPromises);
