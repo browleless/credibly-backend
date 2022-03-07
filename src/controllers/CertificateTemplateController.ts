@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { AutoRespond, handleValidation } from '../api';
 import { CreateCertificateTemplateReq, GetCertificateTemplateReq, GetCertificateTemplateRes } from '../models';
 import { certificateTemplateService } from '../services';
-import { toCertificateTemplateRes } from '../transformers/certificate-template';
+import { toCertificateTemplateRes } from '../transformers';
 
 @Controller('certificateTemplate')
 export class CertificateTemplateController {
