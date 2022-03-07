@@ -4,12 +4,14 @@ import { AuthController } from './AuthController';
 import { AwardeeController } from './AwardeeController';
 import { AwardeeGroupController } from './AwardeeGroupController';
 import { UserController } from './UserController';
+import { CredentialTemplateController } from './CredentialTemplateController';
 
 const childControllers: any[] = [
   new AuthController(),
   new AwardeeController(),
   new AwardeeGroupController(),
-  new UserController()
+  new UserController(),
+  new CredentialTemplateController()
 ];
 
 @Controller(env.api.path)
