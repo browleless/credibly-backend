@@ -25,3 +25,10 @@ ADD CONSTRAINT `FK_AwardeeGroupAwardeeIds_awardeeId`
   REFERENCES `Awardee` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+ALTER TABLE `CertificateTemplate`
+ADD CONSTRAINT `FK_CertificateTemplate_organisationId`
+  FOREIGN KEY (`organisationId`)
+  REFERENCES `User` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

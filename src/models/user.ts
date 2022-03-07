@@ -30,8 +30,3 @@ export interface UpdateUserReq {
   email?: string;
   walletAddress?: string;
 }
-
-export interface CreateCredentialTemplateReq {
-  organisationId: number,
-  image: Buffer;
-}

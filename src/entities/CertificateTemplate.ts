@@ -2,7 +2,7 @@ import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript
 import { User } from '.';
 
 @Table
-export class CredentialTemplate extends Model {
+export class CertificateTemplate extends Model {
 
   @Column({
       type: DataType.INTEGER,
@@ -20,8 +20,15 @@ export class CredentialTemplate extends Model {
   organisationId!: number;
 
   @Column({
-    type: DataType.BLOB('long'),
+    type: DataType.STRING(255),
     allowNull: false,
+    unique: true
+  })
+  certificateName!: string;
+
+  @Column({
+    type: DataType.BLOB('long'),
+    allowNull: false
   })
   image!: Buffer;
 

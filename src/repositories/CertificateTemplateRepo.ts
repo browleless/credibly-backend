@@ -1,25 +1,25 @@
 import { BaseRepo } from './BaseRepo';
 import { WhereOptions } from 'sequelize';
-import { CredentialTemplate } from '../entities';
+import { CertificateTemplate } from '../entities';
 import { sequelize } from '../sequelize';
 
-export class CredentialTemplateRepo extends BaseRepo<CredentialTemplate> {
+export class CertificateTemplateRepo extends BaseRepo<CertificateTemplate> {
 
   constructor() {
-    super(sequelize, CredentialTemplate);
+    super(sequelize, CertificateTemplate);
   }
 
-  async findById(id: number): Promise<CredentialTemplate> {
+  async findById(id: number): Promise<CertificateTemplate> {
     const where: WhereOptions = { id };
     return this.findOne({ where });
   }
 
-  async findByIds(ids: number[]): Promise<CredentialTemplate[]> {
+  async findByIds(ids: number[]): Promise<CertificateTemplate[]> {
     const where: WhereOptions = { id: ids };
     return this.findAll({ where });
   }
 
-  async findByOrganisationId(organisationId: number): Promise<CredentialTemplate[]> {
+  async findByOrganisationId(organisationId: number): Promise<CertificateTemplate[]> {
     const where: WhereOptions = { organisationId };
     return this.findAll({ where });
   }

@@ -35,9 +35,11 @@ CREATE TABLE IF NOT EXISTS `AwardeeGroupAwardeeIds` (
   PRIMARY KEY (`awardeeGroupId`, `awardeeId`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `CredentialTemplate` (
+CREATE TABLE IF NOT EXISTS `CertificateTemplate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `organisationId` int(11) NOT NULL,
+  `certificateName` varchar(255) NOT NULL,
   `image` LONGBLOB NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `organisationId_certificateName_UNIQUE` (`organisationId`, `certificateName`)
 ) ENGINE=InnoDB;
