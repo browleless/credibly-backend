@@ -11,24 +11,16 @@ export class DocumentService {
 
     try {
       const documentsToUpload = [];
+      const flattenedFiles = [].concat(...[files])
 
-      if (files instanceof Array) {
-        files.forEach(file => {
-          const { name, data } = file;
-          documentsToUpload.push({
-            organisationId,
-            name,
-            data
-          })
-        })
-      } else {
-        const { name, data } = files;
+      flattenedFiles.forEach((file: UploadedFile) => {
+        const { name, data } = file;
         documentsToUpload.push({
           organisationId,
           name,
           data
         })
-      }
+      })
 
       await documentRepo.bulkCreate(documentsToUpload, transaction);
 

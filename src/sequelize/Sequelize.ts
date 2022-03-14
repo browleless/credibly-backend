@@ -27,6 +27,7 @@ export class Sequelize {
 
     const sequelizeOptions: SequelizeOptions = {
       dialect: 'mysql',
+      logging: false,
       port,
       define: {
         freezeTableName: true,
