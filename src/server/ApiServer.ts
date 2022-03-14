@@ -19,7 +19,7 @@ export class ApiServer extends Server {
   start() {
     console.log('Starting API server using environment variables');
     this.app.listen(env.api.port, () => {
-      console.log(`API server is started, port=${env.api.port}, path=${env.api.path}`);
+      console.log(`API server started on port=${env.api.port}, path=${env.api.path}`);
     });
   }
 }

@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `hashedPassword` varchar(60) NOT NULL,
   `uen` varchar(10) DEFAULT NULL,
@@ -42,4 +43,23 @@ CREATE TABLE IF NOT EXISTS `CertificateTemplate` (
   `image` LONGBLOB NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `organisationId_certificateName_UNIQUE` (`organisationId`, `certificateName`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `TransferRequest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `organisationId` int(11) NOT NULL,
+  `certificateUuid` varchar(255) NOT NULL,
+  `newEmail` varchar(255) NOT NULL,
+  `approved` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organisationId` int(11) DEFAULT NULL,
+  `transferRequestId` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `data` LONGBLOB NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;

@@ -1,5 +1,8 @@
+import { DocumentDto } from ".";
+
 export interface RegisterReq {
   email: string;
+  name: string;
   password: string;
   uen?: string;
   walletAddress: string;
@@ -29,4 +32,12 @@ export interface UpdateUserReq {
   password?: string;
   email?: string;
   walletAddress?: string;
+}
+
+export interface GetPendingApprovalRes {
+  userId: number;
+  name: string;
+  email: string;
+  uen: string;
+  documents: DocumentDto[];
 }

@@ -1,13 +1,13 @@
 import { BaseRepo, IncludeOptions, RepoOptions } from './BaseRepo';
 import { Includeable, WhereOptions } from 'sequelize';
-import { AwardeeGroup, User } from '../entities';
+import { Document, User } from '../entities';
 import { sequelize } from '../sequelize';
-import { awardeeGroupRepo } from '.';
+import { documentRepo } from '.';
 
-export type UserInclude = 'groups';
+export type UserInclude = 'documents';
 
 export interface UserRepoOptions extends RepoOptions<UserInclude> {
-  groups?: IncludeOptions;
+  documents?: IncludeOptions;
 }
 
 export class UserRepo extends BaseRepo<User, UserInclude, UserRepoOptions> {
@@ -31,15 +31,20 @@ export class UserRepo extends BaseRepo<User, UserInclude, UserRepoOptions> {
     return this.findOne({ where, options });
   }
 
+  async findByApproved(approved: boolean, options?: UserRepoOptions): Promise<User[]> {
+    const where: WhereOptions = { approved };
+    return this.findAll({ where, options });
+  }
+
   override constructInclude(options?: UserRepoOptions) {
     const includes: Includeable[] = [];
 
     options?.includes?.forEach(include => {
-      if (include === 'groups') {
+      if (include === 'documents') {
         includes.push({
-          ...options.groups,
-          model: AwardeeGroup,
-          include: awardeeGroupRepo.constructInclude(options.groups)
+          ...options.documents,
+          model: Document,
+          include: documentRepo.constructInclude(options.documents)
         });
       }
     });

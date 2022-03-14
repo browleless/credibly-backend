@@ -12,13 +12,14 @@ export class AuthService {
     const transaction = await sequelize.getTransaction();
 
     try {
-      const  { email, password, uen, walletAddress, accountType } = req;
+      const  { name, email, password, uen, walletAddress, accountType } = req;
 
       // TODO check for constraint violations etc.
 
       const hashedPassword = await bcrypt.hash(password, 10);
       
       await userRepo.create({
+        name,
         email,
         hashedPassword,
         uen,

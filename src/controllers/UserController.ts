@@ -1,8 +1,9 @@
 import { Controller, Get, Middleware, Patch, Post } from '@overnightjs/core';
 import { Request } from 'express';
 import { AutoRespond, handleValidation } from '../api';
-import { ApproveUserReq, UpdateUserReq } from '../models';
+import { ApproveUserReq, GetPendingApprovalRes, UpdateUserReq } from '../models';
 import { userService } from '../services';
+import { toPendingApprovalRes } from '../transformers';
 
 @Controller('user')
 export class UserController {
@@ -27,5 +28,13 @@ export class UserController {
   async updateUser(req: Request): Promise<void> {
     const input: UpdateUserReq = req.body;
     await userService.updateUser(input);
+  }
+
+  @Get('pendingApprovals')
+  @AutoRespond()
+  @Middleware(handleValidation)
+  async getPendingApprovals(): Promise<GetPendingApprovalRes[]> {
+    const data = await userService.getPendingApprovals();
+    return data.map(record => toPendingApprovalRes(record));
   }
 }

@@ -12,10 +12,12 @@ export class UserService {
 
     try {
 
+      const name = 'Credibly Admin';
       const email = 'admin@credibly.com';
       const hashedPassword = await bcrypt.hash('password', 10);
 
       await userRepo.create({
+        name,
         email,
         hashedPassword,
         accountType: 0,
@@ -68,7 +70,6 @@ export class UserService {
       throw err;
     }
   }
-
   
   async updateUser(req: UpdateUserReq): Promise<void> {
 
@@ -105,6 +106,18 @@ export class UserService {
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();
+      throw err;
+    }
+  }
+
+  async getPendingApprovals(): Promise<User[]> {
+
+    try {
+      const pendingApprovals = await userRepo.findByApproved(false, { includes: ['documents'] });
+
+      return pendingApprovals;
+    } catch (err) {
+      console.log(err.message);
       throw err;
     }
   }

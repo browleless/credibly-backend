@@ -1,5 +1,5 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
-import { AwardeeGroup } from '.';
+import { Document } from '.';
 
 @Table
 export class User extends Model {
@@ -10,6 +10,12 @@ export class User extends Model {
     autoIncrement: true
   })
   override id!: number;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false
+  })
+  name!: string;
 
   @Column({
     type: DataType.STRING(255),
@@ -48,7 +54,7 @@ export class User extends Model {
   })
   approved!: boolean;
 
-  @HasMany(() => AwardeeGroup)
-  groups?: AwardeeGroup[];
+  @HasMany(() => Document)
+  documents?: Document[];
   
 }
