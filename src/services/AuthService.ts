@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 
 export class AuthService {
 
-  async register(req: RegisterReq): Promise<void> {
+  async register(req: RegisterReq): Promise<number> {
 
     const transaction = await sequelize.getTransaction();
 
@@ -18,7 +18,7 @@ export class AuthService {
 
       const hashedPassword = await bcrypt.hash(password, 10);
       
-      await userRepo.create({
+      const newUser = await userRepo.create({
         name,
         email,
         hashedPassword,
@@ -29,6 +29,8 @@ export class AuthService {
       }, transaction);
 
       await transaction.commit();
+
+      return newUser.id;
 
     } catch (err) {
       console.log(err.message);

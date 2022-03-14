@@ -9,9 +9,10 @@ export class AuthController {
 
   @Post('register')
   @AutoRespond()
-  async register(req: Request): Promise<void> {
+  async register(req: Request): Promise<number> {
     const input: RegisterReq = req.body;
-    await authService.register(input);
+    const data = authService.register(input);
+    return data;
   }
 
   @Post('login')
