@@ -1,5 +1,6 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { Document } from '.';
+import { AccountType } from '../models';
 
 @Table
 export class User extends Model {
@@ -46,7 +47,7 @@ export class User extends Model {
     type: DataType.INTEGER,
     allowNull: false
   })
-  accountType!: number;
+  accountType!: AccountType;
 
   @Column({
     type: DataType.BOOLEAN,

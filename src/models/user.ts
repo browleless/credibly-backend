@@ -1,12 +1,18 @@
 import { DocumentDto } from ".";
 
+export enum AccountType {
+  ADMIN = 0,
+  ORGANISATION = 1,
+  AWARDEE = 2
+}
+
 export interface RegisterReq {
   email: string;
   name: string;
   password: string;
   uen?: string;
   walletAddress: string;
-  accountType: number;
+  accountType: AccountType;
 }
 
 export interface LoginReq {
@@ -15,9 +21,11 @@ export interface LoginReq {
 }
 
 export interface LoginRes {
+  id: number;
+  name: string;
   email: string;
   walletAddress: string;
-  accountType: number;
+  accountType: AccountType;
   approved: boolean;
   token: string;
 }
@@ -35,7 +43,7 @@ export interface UpdateUserReq {
 }
 
 export interface GetPendingApprovalRes {
-  userId: number;
+  key: number;
   name: string;
   email: string;
   uen: string;

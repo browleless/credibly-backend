@@ -2,7 +2,7 @@ import { User } from "../entities";
 import { GetPendingApprovalRes } from "../models";
 
 export const toPendingApprovalRes = (user: User): GetPendingApprovalRes => ({
-  userId: user.id,
+  key: user.id,
   name: user.name,
   email: user.email,
   uen: user.uen,
