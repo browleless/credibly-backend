@@ -12,3 +12,8 @@ export interface GetCertificateTemplateRes {
   certificateName: string;
   image: string;
 }
+
+export interface DeleteCertificateTemplateReq {
+  certificateName: string;
+  organisationId: number;
+}

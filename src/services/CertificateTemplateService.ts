@@ -66,4 +66,29 @@ export class CertificateTemplateService {
     }
   }
 
+  async getCertificateTemplatesByOrganisationId(id: number): Promise<CertificateTemplate[]> {
+    try {
+
+      const credentialTemplates = await certificateTemplateRepo.findByOrganisationId(id);
+
+      return credentialTemplates;
+
+    } catch (err) {
+      console.log(err.message);
+      throw err;
+    }
+  }
+
+  async deleteCertificateTemplate(certificateName: string, organisationId: number): Promise<void> {
+    try {
+
+      const credentialTemplates = await certificateTemplateRepo.findByOrganisationIdAndCertificateName(organisationId, certificateName);
+      certificateTemplateRepo.destroy(credentialTemplates[0]);
+
+    } catch (err) {
+      console.log(err.message);
+      throw err;
+    }
+  }
+
 }
