@@ -50,6 +50,17 @@ export class AwardeeService {
     }
   }
 
+  async getAwardeeByEmail(email: string): Promise<Awardee> {    
+    try {
+      const awardee = await awardeeRepo.findByEmail(email);
+      return awardee;
+
+    } catch (err) {
+      console.log(err.message);
+      throw err;
+    }
+  }
+
   async removeAwardees(req: RemoveAwardeeReq): Promise<void> {  
     
     const transaction = await sequelize.getTransaction();

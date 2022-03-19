@@ -16,6 +16,14 @@ export class AwardeeController {
     await awardeeService.createAwardee(input);
   }
 
+  @Get(':email')
+  @AutoRespond()
+  async getAwardee(req: Request): Promise<Awardee> {
+    const email = (req.params.email as unknown) as string;
+    const data = await awardeeService.getAwardeeByEmail(email);
+    return data;
+  }
+
   @Get('organisation/:id')
   @AutoRespond()
   @Middleware(handleValidation)
