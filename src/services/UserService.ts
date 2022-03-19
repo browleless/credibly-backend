@@ -1,28 +1,44 @@
 import { User } from "../entities";
-import { ApproveUserReq, UpdateUserReq } from "../models";
+import { AccountType, ApproveUserReq, UpdateUserReq } from "../models";
 import { userRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 import bcrypt from 'bcrypt';
 
 export class UserService {
 
-  async createAdmin(): Promise<void> {
+  async createAccounts(): Promise<void> {
 
     const transaction = await sequelize.getTransaction();
 
     try {
 
-      const name = 'Credibly Admin';
-      const email = 'admin@credibly.com';
-      const hashedPassword = await bcrypt.hash('password', 10);
+      const users: Partial<User>[] = [];
 
-      await userRepo.create({
-        name,
-        email,
-        hashedPassword,
-        accountType: 0,
-        approved: true,
-      }, transaction);
+      users.push({
+        name: 'Credibly Admin',
+        email: 'admin@credibly.com',
+        hashedPassword: await bcrypt.hash('password', 10),
+        accountType: AccountType.ADMIN,
+        approved: true
+      })
+
+      users.push({
+        name: 'Organisation 1',
+        email: 'organisation1@mail.com',
+        hashedPassword: await bcrypt.hash('password', 10),
+        accountType: AccountType.ORGANISATION,
+        approved: true
+      })
+
+      users.push({
+        name: 'User 1',
+        email: 'user1@mail.com',
+        hashedPassword: await bcrypt.hash('password', 10),
+        accountType: AccountType.AWARDEE,
+        approved: true
+      })
+
+      await userRepo.bulkCreate(users, transaction);
 
       await transaction.commit();
 
@@ -46,7 +62,7 @@ export class UserService {
         throw new Error('Approver account does not exist!');
       }
 
-      if (approver.accountType !== 0) {
+      if (approver.accountType !== AccountType.ADMIN) {
         throw new Error('Only administrator can approve accounts!');
       }
 

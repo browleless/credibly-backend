@@ -10,8 +10,8 @@ export class UserController {
 
   @Get()
   @AutoRespond()
-  async createAdmin(): Promise<void> {
-    await userService.createAdmin();
+  async createAccounts(): Promise<void> {
+    await userService.createAccounts();
   }
 
   @Post('approve')
