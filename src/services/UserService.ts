@@ -27,6 +27,8 @@ export class UserService {
         email: 'organisation1@mail.com',
         hashedPassword: await bcrypt.hash('password', 10),
         accountType: AccountType.ORGANISATION,
+        uen: 'Dummy UEN',
+        walletAddress: 'Dummy Wallet Address 1',
         approved: true
       })
 
@@ -35,6 +37,7 @@ export class UserService {
         email: 'user1@mail.com',
         hashedPassword: await bcrypt.hash('password', 10),
         accountType: AccountType.AWARDEE,
+        walletAddress: 'Dummy Wallet Address 2',
         approved: true
       })
 
