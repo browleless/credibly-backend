@@ -12,12 +12,12 @@ export class AuthService {
     const transaction = await sequelize.getTransaction();
 
     try {
-      const  { name, email, password, uen, walletAddress, accountType } = req;
+      const { name, email, password, uen, walletAddress, accountType } = req;
 
       // TODO check for constraint violations etc.
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      
+
       const newUser = await userRepo.create({
         name,
         email,
@@ -39,12 +39,12 @@ export class AuthService {
     }
   }
 
-  async login(req: LoginReq): Promise<LoginRes> {    
+  async login(req: LoginReq): Promise<LoginRes> {
     try {
-      const  { email, password } = req;
+      const { email, password } = req;
 
       const user = await userRepo.findByEmail(email);
-      
+
       if (!user) {
         throw new Error('No account associated with provided email!');
       }
@@ -62,17 +62,17 @@ export class AuthService {
       const token = jwt.sign(
         { user_id: email },
         env.jwt.secret,
-        { expiresIn: "2h" }
+        { expiresIn: "24h" }
       );
 
-      return { 
+      return {
         id: user.id,
         name: user.name,
-        email: user.email, 
-        walletAddress: user.walletAddress, 
-        accountType: user.accountType, 
-        approved: user.approved, 
-        token 
+        email: user.email,
+        walletAddress: user.walletAddress,
+        accountType: user.accountType,
+        approved: user.approved,
+        token
       };
 
     } catch (err) {

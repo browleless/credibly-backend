@@ -1,7 +1,7 @@
 import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import { Request } from 'express';
 import { AutoRespond, handleValidation } from '../api';
-import { CreateCertificateTemplateReq, GetCertificateTemplateReq, GetCertificateTemplateRes } from '../models';
+import { CreateCertificateTemplateReq, GetCertificateTemplateReq, GetCertificateTemplateRes, DeleteCertificateTemplateReq, GenerateCertificatesReq } from '../models';
 import { certificateTemplateService } from '../services';
 import { toCertificateTemplateRes } from '../transformers';
 
@@ -40,6 +40,33 @@ export class CertificateTemplateController {
     const input: GetCertificateTemplateReq = req.body;
     const data = await certificateTemplateService.getCertificateTemplateByIds(input);
     return data.map(record => toCertificateTemplateRes(record));
+  }
+
+  @Get('organisation/:id')
+  @AutoRespond()
+  @Middleware(handleValidation)
+  async organisationCertificateTemplates(req: Request): Promise<GetCertificateTemplateRes[]> {
+    const id = (req.params.id as unknown) as number;
+    const data = await certificateTemplateService.getCertificateTemplatesByOrganisationId(id);
+    return data.map(record => toCertificateTemplateRes(record));
+  }
+
+  @Post('delete')
+  @AutoRespond()
+  @Middleware(handleValidation)
+  async deleteCertificateTemplate(req: Request): Promise<void> {
+    const input: DeleteCertificateTemplateReq = req.body;
+    await certificateTemplateService.deleteCertificateTemplate(input.certificateName, input.organisationId);
+  }
+
+  @Post('generateCertificates')
+  @AutoRespond()
+  @Middleware(handleValidation)
+  async generateCertificates(req: Request): Promise<any> {
+    const input: GenerateCertificatesReq = req.body;
+    const awardeeNamesArr: string[] = input.awardeeNames.split(",")
+    const data = await certificateTemplateService.generateCertificates(input.certificateName, input.organisationId, awardeeNamesArr);
+    return data;
   }
 
 }
