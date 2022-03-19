@@ -12,9 +12,17 @@ export class DocumentController {
   @Post('registration/upload/:id')
   @AutoRespond()
   async uploadRegistrationSupportingDocuments(req: Request): Promise<void> {
-    const id = (req.params.id as unknown) as number;
+    const organisationId = (req.params.id as unknown) as number;
     const files: UploadedFile | UploadedFile[] = req.files.document;
-    await documentService.uploadRegistrationSupportingDocuments(id, files);
+    await documentService.uploadSupportingDocuments({ organisationId }, files);
+  }
+
+  @Post('transferRequest/upload/:id')
+  @AutoRespond()
+  async uploadTransferRequestSupportingDocuments(req: Request): Promise<void> {
+    const transferRequestId = (req.params.id as unknown) as number;
+    const files: UploadedFile | UploadedFile[] = req.files.document;
+    await documentService.uploadSupportingDocuments({ transferRequestId }, files);
   }
 
   @Get(':id')

@@ -1,5 +1,5 @@
-import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
-import { User } from '.';
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
+import { User, Document } from '.';
 
 @Table
 export class TransferRequest extends Model {
@@ -24,17 +24,29 @@ export class TransferRequest extends Model {
     allowNull: false
   })
   organisationId!: number;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false
+  })
+  certificateUuid!: string;
   
   @Column({
     type: DataType.STRING(255),
     allowNull: false
   })
-  newEmail!: string;
+  transferTo!: string;
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false
   })
   approved!: boolean;
+
+  @BelongsTo(() => User, { foreignKey: 'userId' })
+  user!: User;
+
+  @HasMany(() => Document)
+  documents?: Document[];
 
 }

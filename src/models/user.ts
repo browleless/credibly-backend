@@ -49,3 +49,8 @@ export interface GetPendingApprovalRes {
   uen: string;
   documents: DocumentDto[];
 }
+
+export interface UserDto {
+  name: string;
+  email: string;
+}

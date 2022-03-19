@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `TransferRequest` (
   `userId` int(11) NOT NULL,
   `organisationId` int(11) NOT NULL,
   `certificateUuid` varchar(255) NOT NULL,
-  `newEmail` varchar(255) NOT NULL,
+  `transferTo` varchar(255) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
