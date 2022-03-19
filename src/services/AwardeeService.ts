@@ -5,7 +5,7 @@ import { sequelize } from "../sequelize";
 
 export class AwardeeService {
 
-  async createAwardee(req: CreateAwardeeReq): Promise<void> {
+  async createAwardee(req: CreateAwardeeReq): Promise<any> {
 
     const transaction = await sequelize.getTransaction();
 
@@ -23,9 +23,10 @@ export class AwardeeService {
         })
       );
 
-      await awardeeRepo.bulkCreate(newAwardees, transaction);
+      const response = await awardeeRepo.bulkCreate(newAwardees, transaction);
 
       await transaction.commit();
+      return response;
 
     } catch (err) {
       console.log(err.message);
