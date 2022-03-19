@@ -1,7 +1,7 @@
 export interface CreateAwardeeGroupReq {
   organisationId: number;
   groupName: string;
-  awardeeIds: number[];
+  certificateTemplateId: number;
 }
 
 export interface AwardeeGroupAwardeesRes {
