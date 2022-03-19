@@ -8,6 +8,5 @@ cat ./schema.sql >> ./init.sql
 echo "USE $SCHEMA;" >> ./init.sql
 cat ./tables.sql >> ./init.sql
 cat ./keys.sql >> ./init.sql
-cat ./data.sql >> ./init.sql
 
 echo Done
