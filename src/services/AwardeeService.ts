@@ -13,18 +13,37 @@ export class AwardeeService {
       const  { organisationId, awardees } = req;
 
       // TODO validation for constraint violations
+      
+      const orgAwardees = await awardeeRepo.findByOrganisationId(organisationId);
+
+      const existingAwardees = [];
 
       const newAwardees: Partial<Awardee>[] = [];
       awardees.forEach((awardee: AwardeeDetails) => 
-        newAwardees.push({
-          organisationId,
-          name: awardee.name,
-          email: awardee.email
-        })
+        // trying to solve the problem if the same person added to another grp
+        {
+          const emailExists = orgAwardees.some(orgAwardee =>   // checking if the email alr exists
+            awardee.email == orgAwardee.email
+          )
+          if (!emailExists) { // doesn't exist, add awardee
+            newAwardees.push({
+              organisationId,
+              name: awardee.name,
+              email: awardee.email
+            })
+          } else { // awardee exists
+            existingAwardees.push(awardee.email);
+          }
+        }
       );
 
       const response = await awardeeRepo.bulkCreate(newAwardees, transaction);
 
+      for (let i = 0; i < existingAwardees.length; i++) {
+        const existingAwardee = await awardeeRepo.findByOrganisationIdAndEmail(organisationId, existingAwardees[i]);
+        response.push(existingAwardee);
+      }
+      
       await transaction.commit();
       return response;
 
