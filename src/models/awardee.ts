@@ -9,6 +9,17 @@ export interface CreateAwardeeReq {
 }
 
 export interface RemoveAwardeeReq {
-  organisationId: number,
+  organisationId: number;
   awardeeIds: number[];
+}
+
+export interface SearchAwardeeReq {
+  query: string;
+}
+
+export interface SearchAwardeeRes {
+  awardeeId: number;
+  organisationName: string;
+  awardeeName: string;
+  awardeeEmail: string;
 }

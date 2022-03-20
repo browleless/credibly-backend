@@ -1,5 +1,5 @@
 import { Awardee } from "../entities";
-import { AwardeeDetails, CreateAwardeeReq, RemoveAwardeeReq } from "../models";
+import { AwardeeDetails, CreateAwardeeReq, RemoveAwardeeReq, SearchAwardeeReq, SearchAwardeeRes } from "../models";
 import { awardeeGroupAwardeeIdsRepo, awardeeRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 
@@ -84,4 +84,19 @@ export class AwardeeService {
       throw err;
     }
   }
+
+  async searchAwardees(req: SearchAwardeeReq): Promise<SearchAwardeeRes[]> {    
+    try {
+      const { query } = req;
+
+      const awardees = await awardeeRepo.findByNameLikeOrEmailLike(query);
+
+      return awardees;
+
+    } catch (err) {
+      console.log(err.message);
+      throw err;
+    }
+  }
+
 }

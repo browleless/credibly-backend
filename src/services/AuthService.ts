@@ -1,5 +1,5 @@
 import { env } from "../env";
-import { LoginReq, LoginRes, RegisterReq } from "../models";
+import { AccountType, LoginReq, LoginRes, RegisterReq } from "../models";
 import { userRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 import jwt from 'jsonwebtoken';
@@ -25,7 +25,7 @@ export class AuthService {
         uen,
         walletAddress,
         accountType,
-        approved: accountType !== 1 ? true : false
+        approved: accountType !== AccountType.ORGANISATION ? true : false
       }, transaction);
 
       await transaction.commit();
