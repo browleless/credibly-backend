@@ -4,26 +4,49 @@ import { awardeeGroupAwardeeIdsRepo, awardeeRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 
 export class AwardeeService {
-  async createAwardee(req: CreateAwardeeReq): Promise<void> {
+
+  async createAwardee(req: CreateAwardeeReq): Promise<any> {
+
     const transaction = await sequelize.getTransaction();
 
     try {
       const { organisationId, awardees } = req;
 
       // TODO validation for constraint violations
+      
+      const orgAwardees = await awardeeRepo.findByOrganisationId(organisationId);
+
+      const existingAwardees = [];
 
       const newAwardees: Partial<Awardee>[] = [];
-      awardees.forEach((awardee: AwardeeDetails) =>
-        newAwardees.push({
-          organisationId,
-          name: awardee.name,
-          email: awardee.email,
-        })
+      awardees.forEach((awardee: AwardeeDetails) => 
+        // trying to solve the problem if the same person added to another grp
+        {
+          const emailExists = orgAwardees.some(orgAwardee =>   // checking if the email alr exists
+            awardee.email == orgAwardee.email
+          )
+          if (!emailExists) { // doesn't exist, add awardee
+            newAwardees.push({
+              organisationId,
+              name: awardee.name,
+              email: awardee.email
+            })
+          } else { // awardee exists
+            existingAwardees.push(awardee.email);
+          }
+        }
       );
 
-      await awardeeRepo.bulkCreate(newAwardees, transaction);
+      const response = await awardeeRepo.bulkCreate(newAwardees, transaction);
 
+      for (let i = 0; i < existingAwardees.length; i++) {
+        const existingAwardee = await awardeeRepo.findByOrganisationIdAndEmail(organisationId, existingAwardees[i]);
+        response.push(existingAwardee);
+      }
+      
       await transaction.commit();
+      return response;
+
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();

@@ -64,7 +64,7 @@ export class CertificateTemplateController {
   @Middleware(handleValidation)
   async generateCertificates(req: Request): Promise<any> {
     const input: GenerateCertificatesReq = req.body;
-    const awardeeNamesArr: string[] = input.awardeeNames.split(",")
+    const awardeeNamesArr: string[] = input.awardeeNames;
     const data = await certificateTemplateService.generateCertificates(input.certificateName, input.organisationId, awardeeNamesArr);
     return data;
   }

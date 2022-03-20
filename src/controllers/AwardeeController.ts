@@ -11,9 +11,9 @@ export class AwardeeController {
   @Post('create')
   @AutoRespond()
   @Middleware(handleValidation)
-  async createAwardees(req: Request): Promise<void> {
+  async createAwardees(req: Request): Promise<any> {
     const input: CreateAwardeeReq = req.body;
-    await awardeeService.createAwardee(input);
+    return await awardeeService.createAwardee(input);
   }
 
   @Get(':email')

@@ -6,6 +6,7 @@ export interface CreateAwardeeGroupReq {
 
 export interface AwardeeGroupAwardeesRes {
   id: number;
+  key: number;
   name: string;
   email: string;
 }
