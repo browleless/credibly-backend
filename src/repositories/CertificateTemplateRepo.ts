@@ -24,4 +24,9 @@ export class CertificateTemplateRepo extends BaseRepo<CertificateTemplate> {
     return this.findAll({ where });
   }
 
+  async findByOrganisationIdAndCertificateName(organisationId: number, certificateName: string): Promise<CertificateTemplate[]> {
+    const where: WhereOptions = { organisationId, certificateName };
+    return this.findAll({ where });
+  }
+
 }
