@@ -1,9 +1,9 @@
-import { DocumentDto } from ".";
+import { DocumentDto } from "./document";
 
 export enum AccountType {
   ADMIN = 0,
   ORGANISATION = 1,
-  AWARDEE = 2
+  AWARDEE = 2,
 }
 
 export interface RegisterReq {

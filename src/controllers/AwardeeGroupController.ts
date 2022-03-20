@@ -1,15 +1,19 @@
-import { Controller, Delete, Get, Middleware, Post } from '@overnightjs/core';
-import { Request } from 'express';
-import { AutoRespond, handleValidation } from '../api';
-import { AwardeeGroup } from '../entities';
-import { AddRemoveGroupAwardeeReq, AwardeeGroupAwardeesRes, CreateAwardeeGroupReq, RemoveAwardeeGroupReq } from '../models';
-import { awardeeGroupService } from '../services';
-import { toAwardeeGroupAwardeesRes } from '../transformers';
+import { Controller, Delete, Get, Middleware, Post } from "@overnightjs/core";
+import { Request } from "express";
+import { AutoRespond, handleValidation } from "../api";
+import { AwardeeGroup } from "../entities";
+import {
+  AddRemoveGroupAwardeeReq,
+  AwardeeGroupAwardeesRes,
+  CreateAwardeeGroupReq,
+  RemoveAwardeeGroupReq,
+} from "../models";
+import { awardeeGroupService } from "../services";
+import { toAwardeeGroupAwardeesRes } from "../transformers";
 
-@Controller('awardeeGroup')
+@Controller("awardeeGroup")
 export class AwardeeGroupController {
-
-  @Post('create')
+  @Post("create")
   @AutoRespond()
   @Middleware(handleValidation)
   async createAwardeeGroup(req: Request): Promise<void> {
@@ -17,25 +21,25 @@ export class AwardeeGroupController {
     await awardeeGroupService.createAwardeeGroup(input);
   }
 
-  @Get('organisation/:id')
+  @Get("organisation/:id")
   @AutoRespond()
   @Middleware(handleValidation)
   async awardeeGroups(req: Request): Promise<AwardeeGroup[]> {
-    const id = (req.params.id as unknown) as number;
+    const id = req.params.id as unknown as number;
     const data = await awardeeGroupService.getOrganisationAwardeeGroups(id);
     return data;
   }
 
-  @Get(':id')
+  @Get(":id")
   @AutoRespond()
   @Middleware(handleValidation)
   async awardees(req: Request): Promise<AwardeeGroupAwardeesRes[]> {
-    const id = (req.params.id as unknown) as number;
+    const id = req.params.id as unknown as number;
     const data = await awardeeGroupService.getAwardeeGroupAwardees(id);
-    return data.map(record => toAwardeeGroupAwardeesRes(record));
+    return data.map((record) => toAwardeeGroupAwardeesRes(record));
   }
 
-  @Post('add')
+  @Post("add")
   @AutoRespond()
   @Middleware(handleValidation)
   async addAwardeesToGroup(req: Request): Promise<void> {
@@ -43,7 +47,7 @@ export class AwardeeGroupController {
     await awardeeGroupService.addAwardeesToGroup(input);
   }
 
-  @Delete('removeAwardees')
+  @Delete("removeAwardees")
   @AutoRespond()
   @Middleware(handleValidation)
   async removeAwardeesFromGroup(req: Request): Promise<void> {
@@ -51,7 +55,7 @@ export class AwardeeGroupController {
     await awardeeGroupService.removeAwardeesFromGroup(input);
   }
 
-  @Delete('removeGroups')
+  @Post("removeGroups")
   @AutoRespond()
   @Middleware(handleValidation)
   async removeAwardeeGroups(req: Request): Promise<void> {
