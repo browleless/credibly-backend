@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "ts-node src/start.ts",
-    "start:nodemon": "nodemon --exec ts-node src/start.ts"
+    "start": "node -r ts-node/register src/start.ts",
+    "start:nodemon": "nodemon --exec node -r ts-node/register src/start.ts"
   },
   "dependencies": {
     "@overnightjs/core": "^1.7.6",
