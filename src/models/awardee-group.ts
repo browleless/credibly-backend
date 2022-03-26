@@ -21,3 +21,9 @@ export interface RemoveAwardeeGroupReq {
   organisationId: number;
   groupIds: number[];
 }
+
+export interface GetOrgasationAwardeeGroupRes {
+  key: number;
+  groupName: string;
+  image: string;
+}

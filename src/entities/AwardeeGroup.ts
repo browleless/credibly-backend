@@ -1,11 +1,12 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
   Model,
   Table,
 } from "sequelize-typescript";
-import { User } from ".";
+import { User, CertificateTemplate } from ".";
 
 @Table
 export class AwardeeGroup extends Model {
@@ -31,10 +32,13 @@ export class AwardeeGroup extends Model {
   })
   groupName!: string;
 
+  @ForeignKey(() => CertificateTemplate)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
-    unique: false,
+    allowNull: false
   })
   certificateTemplateId!: number;
+
+  @BelongsTo(() => CertificateTemplate)
+  certificateTemplate!: CertificateTemplate;
 }

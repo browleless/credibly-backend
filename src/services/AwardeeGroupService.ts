@@ -49,11 +49,7 @@ export class AwardeeGroupService {
 
   async getOrganisationAwardeeGroups(id: number): Promise<AwardeeGroup[]> {
     try {
-      const awardeeGroups = await awardeeGroupRepo.findByOrganisationId(id);
-
-      if (awardeeGroups.length === 0) {
-        throw new Error("No awardees groups created for current organisation!");
-      }
+      const awardeeGroups = await awardeeGroupRepo.findByOrganisationId(id, { includes: ['certificateTemplate'] });
 
       return awardeeGroups;
     } catch (err) {

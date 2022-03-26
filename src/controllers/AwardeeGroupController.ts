@@ -1,15 +1,15 @@
 import { Controller, Delete, Get, Middleware, Post } from "@overnightjs/core";
 import { Request } from "express";
 import { AutoRespond, handleValidation } from "../api";
-import { AwardeeGroup } from "../entities";
 import {
   AddRemoveGroupAwardeeReq,
   AwardeeGroupAwardeesRes,
   CreateAwardeeGroupReq,
+  GetOrgasationAwardeeGroupRes,
   RemoveAwardeeGroupReq,
 } from "../models";
 import { awardeeGroupService } from "../services";
-import { toAwardeeGroupAwardeesRes } from "../transformers";
+import { toAwardeeGroupAwardeesRes, toOrganisationAwardeeGroupRes } from "../transformers";
 
 @Controller("awardeeGroup")
 export class AwardeeGroupController {
@@ -24,10 +24,10 @@ export class AwardeeGroupController {
   @Get("organisation/:id")
   @AutoRespond()
   @Middleware(handleValidation)
-  async awardeeGroups(req: Request): Promise<AwardeeGroup[]> {
+  async awardeeGroups(req: Request): Promise<GetOrgasationAwardeeGroupRes[]> {
     const id = req.params.id as unknown as number;
     const data = await awardeeGroupService.getOrganisationAwardeeGroups(id);
-    return data;
+    return data.map((record) => toOrganisationAwardeeGroupRes(record));
   }
 
   @Get(":id")
