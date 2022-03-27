@@ -12,7 +12,7 @@ import {
 import { sequelize } from "../sequelize";
 
 export class AwardeeGroupService {
-  async createAwardeeGroup(req: CreateAwardeeGroupReq): Promise<void> {
+  async createAwardeeGroup(req: CreateAwardeeGroupReq): Promise<any> {
     const transaction = await sequelize.getTransaction();
 
     try {
@@ -20,7 +20,7 @@ export class AwardeeGroupService {
 
       // TODO check for constraint violations
 
-      await awardeeGroupRepo.create(
+      const res = await awardeeGroupRepo.create(
         {
           organisationId,
           groupName,
@@ -28,6 +28,7 @@ export class AwardeeGroupService {
         },
         transaction
       );
+      console.log(res);
 
       // const awardeeGroupAwardeeIds: Partial<AwardeeGroupAwardeeIds>[] = []
       // awardeeIds.forEach((awardeeId: number) =>
@@ -40,6 +41,7 @@ export class AwardeeGroupService {
       // await awardeeGroupAwardeeIdsRepo.bulkCreate(awardeeGroupAwardeeIds, transaction),
 
       await transaction.commit();
+      return res;
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();

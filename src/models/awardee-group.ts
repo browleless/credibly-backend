@@ -26,4 +26,13 @@ export interface GetOrgasationAwardeeGroupRes {
   key: number;
   groupName: string;
   image: string;
+  certificateTemplateId: number;
+  certificateName: string;
+}
+
+export interface CreateAwardeeGroupRes {
+  id: number;
+  organisationId: number;
+  groupName: string;
+  certificateTemplateId: number;
 }

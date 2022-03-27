@@ -5,6 +5,7 @@ import {
   AddRemoveGroupAwardeeReq,
   AwardeeGroupAwardeesRes,
   CreateAwardeeGroupReq,
+  CreateAwardeeGroupRes,
   GetOrgasationAwardeeGroupRes,
   RemoveAwardeeGroupReq,
 } from "../models";
@@ -16,9 +17,10 @@ export class AwardeeGroupController {
   @Post("create")
   @AutoRespond()
   @Middleware(handleValidation)
-  async createAwardeeGroup(req: Request): Promise<void> {
+  async createAwardeeGroup(req: Request): Promise<CreateAwardeeGroupRes> {
     const input: CreateAwardeeGroupReq = req.body;
-    await awardeeGroupService.createAwardeeGroup(input);
+    const data = await awardeeGroupService.createAwardeeGroup(input);
+    return data;
   }
 
   @Get("organisation/:id")

@@ -1,5 +1,5 @@
 import { CertificateTemplate } from "../entities";
-import { CreateCertificateTemplateReq, GetCertificateTemplateReq } from "../models";
+import { AwardeeType, CreateCertificateTemplateReq, GetCertificateTemplateReq } from "../models";
 import { certificateTemplateRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 
@@ -93,7 +93,7 @@ export class CertificateTemplateService {
     }
   }
 
-  async generateCertificates(certificateName: string, organisationId: number, awardeeNames: string[]): Promise<any> {
+  async generateCertificates(certificateName: string, organisationId: number, awardees: AwardeeType[]): Promise<any> {
     try {
       const data = await certificateTemplateRepo.findByOrganisationIdAndCertificateName(organisationId, certificateName);
       if (data.length == 0) {
@@ -103,22 +103,27 @@ export class CertificateTemplateService {
       const certificateTemplate = data[0];
       interface certificate {
         awardeeName: string,
+        awardeeEmail: string,
+        issueDate: string,
         encodedCertificate: string
       }
       var certificates: certificate[] = [];
-      for (var awardeeName of awardeeNames) {
+      console.log(awardees);
+      for (var awardee of awardees) {
         const image = await Jimp.read(certificateTemplate.image)
         const font = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK);
         var w = image.bitmap.width;
         var h = image.bitmap.height;
         image.print(font, 0, 0, {
-          text: awardeeName,
+          text: awardee.name,
           alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
           alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
         }, w, h);
         image.getBase64(Jimp.MIME_PNG, (err, res) => {
           var certificate: certificate = {
-            awardeeName: awardeeName,
+            awardeeName: awardee.name,
+            awardeeEmail: awardee.email,
+            issueDate: awardee.date,
             encodedCertificate: res
           }
           certificates.push(certificate)

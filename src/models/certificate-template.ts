@@ -22,5 +22,13 @@ export interface DeleteCertificateTemplateReq {
 export interface GenerateCertificatesReq {
   certificateName: string;
   organisationId: number;
-  awardeeNames: string[];
+  awardees: AwardeeType[];
+}
+
+export interface AwardeeType {
+  id: number;
+  key: number;
+  name: string;
+  date: string;
+  email: string;
 }
