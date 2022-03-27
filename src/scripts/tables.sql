@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `AwardeeGroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `organisationId` int(11) NOT NULL,
   `groupName` varchar(255) NOT NULL,
+  `groupDescription` varchar(255) NOT NULL,
   `certificateTemplateId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `organisationId_groupName_UNIQUE` (`organisationId`, `groupName`)

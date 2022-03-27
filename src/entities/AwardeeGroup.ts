@@ -32,10 +32,16 @@ export class AwardeeGroup extends Model {
   })
   groupName!: string;
 
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  groupDescription!: string;
+
   @ForeignKey(() => CertificateTemplate)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false
+    allowNull: false,
   })
   certificateTemplateId!: number;
 

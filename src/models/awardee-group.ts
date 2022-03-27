@@ -1,6 +1,7 @@
 export interface CreateAwardeeGroupReq {
   organisationId: number;
   groupName: string;
+  groupDescription: string;
   certificateTemplateId: number;
 }
 
@@ -25,5 +26,6 @@ export interface RemoveAwardeeGroupReq {
 export interface GetOrgasationAwardeeGroupRes {
   key: number;
   groupName: string;
+  groupDescription: string;
   image: string;
 }

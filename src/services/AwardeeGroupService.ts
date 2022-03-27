@@ -16,7 +16,12 @@ export class AwardeeGroupService {
     const transaction = await sequelize.getTransaction();
 
     try {
-      const { organisationId, groupName, certificateTemplateId } = req;
+      const {
+        organisationId,
+        groupName,
+        groupDescription,
+        certificateTemplateId,
+      } = req;
 
       // TODO check for constraint violations
 
@@ -24,6 +29,7 @@ export class AwardeeGroupService {
         {
           organisationId,
           groupName,
+          groupDescription,
           certificateTemplateId,
         },
         transaction
@@ -49,7 +55,9 @@ export class AwardeeGroupService {
 
   async getOrganisationAwardeeGroups(id: number): Promise<AwardeeGroup[]> {
     try {
-      const awardeeGroups = await awardeeGroupRepo.findByOrganisationId(id, { includes: ['certificateTemplate'] });
+      const awardeeGroups = await awardeeGroupRepo.findByOrganisationId(id, {
+        includes: ["certificateTemplate"],
+      });
 
       return awardeeGroups;
     } catch (err) {
