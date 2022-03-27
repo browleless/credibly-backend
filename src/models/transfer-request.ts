@@ -3,7 +3,6 @@ import { UserDto, DocumentDto } from ".";
 export interface CreateTransferRequest {
   userId: number;
   organisationId: number;
-  certificateUuid: string;
   transferTo: string;
 }
 
