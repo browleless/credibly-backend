@@ -8,7 +8,7 @@ import {
 import { sequelize } from "../sequelize";
 
 export class TransferRequestService {
-  async createTransferRequest(req: CreateTransferRequest): Promise<void> {
+  async createTransferRequest(req: CreateTransferRequest): Promise<number> {
     const transaction = await sequelize.getTransaction();
 
     try {
@@ -20,12 +20,14 @@ export class TransferRequestService {
         throw new Error("Approver account must be an organisation account!");
       }
 
-      await transferRequestRepo.create(
+      const newTR = await transferRequestRepo.create(
         { userId, organisationId, transferTo, approved: false },
         transaction
       );
 
       await transaction.commit();
+
+      return newTR.id;
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();
