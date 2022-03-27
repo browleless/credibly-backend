@@ -53,4 +53,5 @@ export interface GetPendingApprovalRes {
 export interface UserDto {
   name: string;
   email: string;
+  newEmail: string;
 }

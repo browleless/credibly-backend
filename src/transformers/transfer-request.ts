@@ -5,7 +5,8 @@ export const toOrganisationPendingApprovals = (transferRequest: TransferRequest)
   key: transferRequest.id,
   user: {
     name: transferRequest.user.name,
-    email: transferRequest.user.email
+    email: transferRequest.user.email,
+    newEmail: transferRequest.transferTo,
   },
   documents: transferRequest.documents.map(record => ({
     id: record.id,
