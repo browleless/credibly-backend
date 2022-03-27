@@ -9,6 +9,7 @@ export interface GetCertificateTemplateReq {
 }
 
 export interface GetCertificateTemplateRes {
+  certificateId: number;
   certificateName: string;
   image: string;
 }
