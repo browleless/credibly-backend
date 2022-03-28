@@ -28,7 +28,6 @@ export class AwardeeGroupService {
         },
         transaction
       );
-      console.log(res);
 
       // const awardeeGroupAwardeeIds: Partial<AwardeeGroupAwardeeIds>[] = []
       // awardeeIds.forEach((awardeeId: number) =>

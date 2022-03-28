@@ -57,7 +57,6 @@ export class AwardeeService {
   async getOrgnisationAwardees(id: number): Promise<Awardee[]> {
     try {
       const awardees = await awardeeRepo.findByOrganisationId(id);
-
       if (awardees.length === 0) {
         throw new Error("No awardees created for current organisation!");
       }
