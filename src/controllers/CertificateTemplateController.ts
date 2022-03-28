@@ -1,7 +1,7 @@
 import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import { Request } from 'express';
 import { AutoRespond, handleValidation } from '../api';
-import { CreateCertificateTemplateReq, GetCertificateTemplateReq, GetCertificateTemplateRes, DeleteCertificateTemplateReq, GenerateCertificatesReq } from '../models';
+import { CreateCertificateTemplateReq, GetCertificateTemplateReq, GetCertificateTemplateRes, DeleteCertificateTemplateReq, GenerateCertificatesReq, AwardeeType } from '../models';
 import { certificateTemplateService } from '../services';
 import { toCertificateTemplateRes } from '../transformers';
 
@@ -64,8 +64,8 @@ export class CertificateTemplateController {
   @Middleware(handleValidation)
   async generateCertificates(req: Request): Promise<any> {
     const input: GenerateCertificatesReq = req.body;
-    const awardeeNamesArr: string[] = input.awardeeNames;
-    const data = await certificateTemplateService.generateCertificates(input.certificateName, input.organisationId, awardeeNamesArr);
+    const awardeesArr: AwardeeType[] = input.awardees;
+    const data = await certificateTemplateService.generateCertificates(input.certificateName, input.organisationId, awardeesArr);
     return data;
   }
 

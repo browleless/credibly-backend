@@ -8,4 +8,6 @@ export const toOrganisationAwardeeGroupRes = (
   groupName: awardeeGroup.groupName,
   groupDescription: awardeeGroup.groupDescription,
   image: Buffer.from(awardeeGroup.certificateTemplate.image).toString("base64"),
+  certificateTemplateId: awardeeGroup.certificateTemplateId,
+  certificateName: awardeeGroup.certificateTemplate.certificateName,
 });

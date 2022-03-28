@@ -28,6 +28,7 @@ export interface LoginRes {
   accountType: AccountType;
   approved: boolean;
   token: string;
+  uen: string;
 }
 
 export interface ApproveUserReq {

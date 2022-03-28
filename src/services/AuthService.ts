@@ -72,6 +72,7 @@ export class AuthService {
         walletAddress: user.walletAddress,
         accountType: user.accountType,
         approved: user.approved,
+        uen: user.uen,
         token
       };
 
