@@ -18,6 +18,7 @@ export interface RegisterReq {
 export interface LoginReq {
   email: string;
   password: string;
+  walletAddress: string;
 }
 
 export interface LoginRes {
@@ -48,6 +49,7 @@ export interface GetPendingApprovalRes {
   name: string;
   email: string;
   uen: string;
+  walletAddress: string;
   documents: DocumentDto[];
 }
 

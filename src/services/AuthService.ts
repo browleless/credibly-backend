@@ -41,7 +41,7 @@ export class AuthService {
 
   async login(req: LoginReq): Promise<LoginRes> {
     try {
-      const { email, password } = req;
+      const { email, password, walletAddress } = req;
 
       const user = await userRepo.findByEmail(email);
 
@@ -57,6 +57,10 @@ export class AuthService {
 
       if (!passwordMatch) {
         throw new Error('Invalid password for account!');
+      }
+
+      if (!!user.walletAddress && user.walletAddress !== walletAddress) {
+        throw new Error('Please use the correct MetaMask wallet address to access this account!');
       }
 
       const token = jwt.sign(

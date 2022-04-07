@@ -6,6 +6,7 @@ export const toPendingApprovalRes = (user: User): GetPendingApprovalRes => ({
   name: user.name,
   email: user.email,
   uen: user.uen,
+  walletAddress: user.walletAddress,
   documents: user.documents.map(record => ({
     id: record.id,
     name: record.name
