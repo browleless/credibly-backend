@@ -19,9 +19,4 @@ export class DocumentRepo extends BaseRepo<Document> {
     return this.findAll({ where });
   }
 
-  async findByTransferRequestId(transferRequestId: number): Promise<Document[]> {
-    const where: WhereOptions = { transferRequestId };
-    return this.findAll({ where });
-  }
-
 }

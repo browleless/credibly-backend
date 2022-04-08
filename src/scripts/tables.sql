@@ -46,19 +46,9 @@ CREATE TABLE IF NOT EXISTS `CertificateTemplate` (
   UNIQUE KEY `organisationId_certificateName_UNIQUE` (`organisationId`, `certificateName`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `TransferRequest` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) NOT NULL,
-  `organisationId` int(11) NOT NULL,
-  `transferTo` varchar(255) NOT NULL,
-  `approved` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
 CREATE TABLE IF NOT EXISTS `Document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organisationId` int(11) DEFAULT NULL,
-  `transferRequestId` int(11) DEFAULT NULL,
+  `organisationId` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `data` LONGBLOB NOT NULL,
   PRIMARY KEY (`id`)

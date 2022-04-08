@@ -14,15 +14,7 @@ export class DocumentController {
   async uploadRegistrationSupportingDocuments(req: Request): Promise<void> {
     const organisationId = (req.params.id as unknown) as number;
     const files: UploadedFile | UploadedFile[] = req.files.document;
-    await documentService.uploadSupportingDocuments({ organisationId }, files);
-  }
-
-  @Post('transferRequest/upload/:id')
-  @AutoRespond()
-  async uploadTransferRequestSupportingDocuments(req: Request): Promise<void> {
-    const transferRequestId = (req.params.id as unknown) as number;
-    const files: UploadedFile | UploadedFile[] = req.files.document;
-    await documentService.uploadSupportingDocuments({ transferRequestId }, files);
+    await documentService.uploadSupportingDocuments(organisationId, files);
   }
 
   @Get(':id')

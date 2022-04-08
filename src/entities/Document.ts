@@ -6,7 +6,6 @@ import {
   Table,
 } from "sequelize-typescript";
 import { User } from "./User";
-import { TransferRequest } from "./TransferRequest";
 
 @Table
 export class Document extends Model {
@@ -20,14 +19,9 @@ export class Document extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
+    allowNull: false
   })
-  organisationId?: number;
-
-  @ForeignKey(() => TransferRequest)
-  @Column({
-    type: DataType.INTEGER,
-  })
-  transferRequestId?: number;
+  organisationId!: number;
 
   @Column({
     type: DataType.STRING(255),
