@@ -31,6 +31,11 @@ export class UserRepo extends BaseRepo<User, UserInclude, UserRepoOptions> {
     return this.findOne({ where, options });
   }
 
+  async findByUen(uen: string, options?: UserRepoOptions): Promise<User> {
+    const where: WhereOptions = { uen };
+    return this.findOne({ where, options });
+  }
+
   async findByApproved(approved: boolean, options?: UserRepoOptions): Promise<User[]> {
     const where: WhereOptions = { approved };
     return this.findAll({ where, options });

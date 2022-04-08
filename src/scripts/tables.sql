@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   `approved` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `uen_UNIQUE` (`uen`),
-  UNIQUE KEY `walletAddress_UNIQUE` (`walletAddress`)
+  UNIQUE KEY `uen_UNIQUE` (`uen`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `Awardee` (

@@ -14,7 +14,18 @@ export class AuthService {
     try {
       const { name, email, password, uen, walletAddress, accountType } = req;
 
-      // TODO check for constraint violations etc.
+      const emailExists = await userRepo.findByEmail(email);
+
+      if (!!emailExists) {
+        throw new Error('Email already in use!');
+      }
+
+      if (!!uen) {
+        const uenExists = await userRepo.findByUen(uen);
+        if (!!uenExists) {
+          throw new Error('UEN already in use!');
+        }
+      }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 

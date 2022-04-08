@@ -37,8 +37,7 @@ export class User extends Model {
   uen?: string;
 
   @Column({
-    type: DataType.STRING(42),
-    unique: true,
+    type: DataType.STRING(42)
   })
   walletAddress?: string;
 
