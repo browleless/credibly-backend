@@ -119,8 +119,9 @@ export class AwardeeGroupService {
       await awardeeGroupAwardeeIdsRepo.bulkCreate(
         awardeeGroupAwardeeIds,
         transaction
-      ),
-        await transaction.commit();
+      );
+      
+      await transaction.commit();
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();
