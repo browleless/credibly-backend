@@ -2,7 +2,7 @@ import { BaseRepo } from './BaseRepo';
 import { WhereOptions } from 'sequelize';
 import { Awardee, User } from '../entities';
 import { sequelize } from '../sequelize';
-import { SearchAwardeeRes } from '../models';
+import { AccountType, SearchAwardeeRes } from '../models';
 
 export class AwardeeRepo extends BaseRepo<Awardee> {
 
@@ -41,10 +41,10 @@ export class AwardeeRepo extends BaseRepo<Awardee> {
     WHERE LOWER(awardee.name) LIKE :query OR LOWER(awardee.email) LIKE :query
     UNION
     SELECT email, name FROM ${User.tableName} user
-    WHERE user.accountType=2 AND (LOWER(user.name) LIKE :query OR LOWER(user.email) LIKE :query)
+    WHERE user.accountType IN (:accountTypes) AND (LOWER(user.name) LIKE :query OR LOWER(user.email) LIKE :query)
   `;
 
-    return this.select(sql, { query: `%${query}%` });
+    return this.select(sql, { query: `%${query}%`, accountTypes: [AccountType.AWARDEE] });
   }
 
 }
