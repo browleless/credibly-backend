@@ -37,11 +37,12 @@ export class AwardeeRepo extends BaseRepo<Awardee> {
 
   async findByNameLikeOrEmailLike(query: string): Promise<SearchAwardeeRes[]> {
     const sql = `
-      SELECT awardee.id awardeeId, user.name organisationName, awardee.name awardeeName, awardee.email awardeeEmail 
-      FROM ${Awardee.tableName} awardee
-      LEFT JOIN ${User.tableName} user ON awardee.organisationId = user.id
-      WHERE LOWER(awardee.name) LIKE :query OR LOWER(awardee.email) LIKE :query
-    `;
+    SELECT email, name FROM ${Awardee.tableName} awardee
+    WHERE LOWER(awardee.name) LIKE :query OR LOWER(awardee.email) LIKE :query
+    UNION
+    SELECT email, name FROM ${User.tableName} user
+    WHERE user.accountType=2 AND (LOWER(user.name) LIKE :query OR LOWER(user.email) LIKE :query)
+  `;
 
     return this.select(sql, { query: `%${query}%` });
   }
