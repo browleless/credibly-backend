@@ -82,13 +82,19 @@ export class CertificateTemplateService {
   }
 
   async deleteCertificateTemplate(certificateName: string, organisationId: number): Promise<void> {
+
+    const transaction = await sequelize.getTransaction();
+
     try {
 
       const credentialTemplates = await certificateTemplateRepo.findByOrganisationIdAndCertificateName(organisationId, certificateName);
-      certificateTemplateRepo.destroy(credentialTemplates[0]);
+      await certificateTemplateRepo.destroy(credentialTemplates[0], transaction);
+
+      await transaction.commit();
 
     } catch (err) {
       console.log(err.message);
+      await transaction.rollback();
       throw err;
     }
   }

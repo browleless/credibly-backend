@@ -104,7 +104,7 @@ export class AwardeeService {
       await transaction.commit();
     } catch (err) {
       console.log(err.message);
-      transaction.rollback();
+      await transaction.rollback();
       throw err;
     }
   }

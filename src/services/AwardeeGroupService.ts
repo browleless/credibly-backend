@@ -157,7 +157,7 @@ export class AwardeeGroupService {
       awardeeGroupAwardeeIds.forEach(
         (awardeeGroupAwardeeId: AwardeeGroupAwardeeIds) =>
           promises.push(
-            awardeeGroupAwardeeIdsRepo.destroy(awardeeGroupAwardeeId)
+            awardeeGroupAwardeeIdsRepo.destroy(awardeeGroupAwardeeId, transaction)
           )
       );
 
