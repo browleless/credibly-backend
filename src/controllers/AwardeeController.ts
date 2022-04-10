@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Middleware, Post } from '@overnightjs/core';
 import { Request } from 'express';
 import { AutoRespond, handleValidation } from '../api';
 import { Awardee } from '../entities';
-import { AwardeeGroupAwardeesRes, CreateAwardeeReq, RemoveAwardeeReq, SearchAwardeeReq, SearchAwardeeRes } from '../models';
+import { AwardeeGroupAwardeesRes, CreateAwardeeReq, RemoveAwardeeReq, SearchAwardeeReq, SearchAwardeeRes, UpdateAwardeeReq } from '../models';
 import { awardeeService } from '../services';
 import { toAwardeeGroupAwardeesRes } from '../transformers';
 
@@ -15,6 +15,14 @@ export class AwardeeController {
   async createAwardees(req: Request): Promise<any> {
     const input: CreateAwardeeReq = req.body;
     return await awardeeService.createAwardee(input);
+  }
+
+  @Post('updateAwardee')
+  @AutoRespond()
+  @Middleware(handleValidation)
+  async updateAwardee(req: Request): Promise<any> {
+    const input: UpdateAwardeeReq = req.body;
+    return await awardeeService.updateAwardee(input);
   }
 
   @Get(':email')

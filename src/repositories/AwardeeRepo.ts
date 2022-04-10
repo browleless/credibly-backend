@@ -20,6 +20,11 @@ export class AwardeeRepo extends BaseRepo<Awardee> {
     return this.findOne({ where });
   }
 
+  async findAllByEmail(email: string): Promise<Awardee[]> {
+    const where: WhereOptions = { email };
+    return this.findAll({ where });
+  }
+
   async findByIds(ids: number[]): Promise<Awardee[]> {
     const where: WhereOptions = { id: ids };
     return this.findAll({ where });

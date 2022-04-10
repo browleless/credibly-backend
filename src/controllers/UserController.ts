@@ -22,7 +22,7 @@ export class UserController {
     await userService.approveUsers(input);
   }
 
-  @Patch('update')
+  @Post('update')
   @AutoRespond()
   @Middleware(handleValidation)
   async updateUser(req: Request): Promise<void> {

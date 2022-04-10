@@ -1,5 +1,5 @@
 import { Awardee } from "../entities";
-import { AwardeeDetails, CreateAwardeeReq, RemoveAwardeeReq, SearchAwardeeReq, SearchAwardeeRes } from "../models";
+import { AwardeeDetails, CreateAwardeeReq, RemoveAwardeeReq, SearchAwardeeReq, SearchAwardeeRes, UpdateAwardeeReq } from "../models";
 import { awardeeGroupAwardeeIdsRepo, awardeeRepo } from "../repositories";
 import { sequelize } from "../sequelize";
 
@@ -47,6 +47,26 @@ export class AwardeeService {
       await transaction.commit();
       return response;
 
+    } catch (err) {
+      console.log(err.message);
+      await transaction.rollback();
+      throw err;
+    }
+  }
+
+  async updateAwardee(req:UpdateAwardeeReq): Promise<any> {
+    const transaction = await sequelize.getTransaction();
+    try {
+      const { newEmail, oldEmail } = req;
+
+      const awardees = await awardeeRepo.findAllByEmail(oldEmail);
+
+      for (let i = 0; i < awardees.length; i++) {
+        awardees[i].email = newEmail
+        await awardeeRepo.save(awardees[i], transaction);
+      }
+      
+      await transaction.commit();
     } catch (err) {
       console.log(err.message);
       await transaction.rollback();
