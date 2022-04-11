@@ -8,6 +8,11 @@ export interface CreateAwardeeReq {
   awardees: AwardeeDetails[];
 }
 
+export interface UpdateAwardeeReq {
+  oldEmail: string;
+  newEmail: string;
+}
+
 export interface RemoveAwardeeReq {
   organisationId: number;
   awardeeIds: number[];
